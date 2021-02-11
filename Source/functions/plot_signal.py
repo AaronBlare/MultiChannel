@@ -1,28 +1,29 @@
-import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
 
-fig, axes = plt.subplots(2, 1)
-plt.subplots_adjust(bottom=0.25)
 
-t = np.arange(0.0, 100.0, 0.1)
-s = np.sin(2*np.pi*t)
-axes[0].plot(t,s)
+def plot_all_signals(data, time):
+    num_rows = 12
+    num_columns = 5
+    fig, axes = plt.subplots(num_rows, num_columns)
+    plt.subplots_adjust(bottom=0.25)
 
-s1 = np.cos(2*np.pi*t)
-axes[1].plot(t,s1)
+    for row_id in range(0, num_rows):
+        for col_id in range(0, num_columns):
+            axes[row_id, col_id].plot(time, data[:, row_id * num_columns + col_id])
 
-axcolor = 'lightgoldenrodyellow'
-axpos = plt.axes([0.2, 0.1, 0.65, 0.03], facecolor=axcolor)
+    axcolor = 'lightgoldenrodyellow'
+    axpos = plt.axes([0.2, 0.1, 0.65, 0.03], facecolor=axcolor)
 
-spos = Slider(axpos, 'Pos', 0.1, 90.0)
+    spos = Slider(axpos, 'Pos', min(time), max(time))
 
-def update(val):
-    pos = spos.val
-    axes[0].axis([pos,pos+10,-1,1])
-    axes[1].axis([pos, pos + 10, -1, 1])
-    fig.canvas.draw_idle()
+    def update(val):
+        pos = spos.val
+        for i in range(0, axes.shape[0]):
+            for j in range(0, axes.shape[1]):
+                axes[i, j].axis([pos, pos + 10, -2000, 2000])
+        fig.canvas.draw_idle()
 
-spos.on_changed(update)
+    spos.on_changed(update)
 
-plt.show()
+    plt.show()
