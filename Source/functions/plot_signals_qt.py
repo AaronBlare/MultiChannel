@@ -1,6 +1,6 @@
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtGui, QtCore
-from PyQt5.QtWidgets import QApplication, QDialog, QVBoxLayout, QGroupBox, QGridLayout
+from PySide2.QtWidgets import QApplication, QDialog, QVBoxLayout, QGroupBox, QGridLayout
 import numpy as np
 import sys
 
